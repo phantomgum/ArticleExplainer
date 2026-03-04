@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    body {
+      width: 300px;
+      padding: 20px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #1c1c2e;
+      color: #e2e2f0;
+      margin: 0;
+    }
+    h2 { margin: 0 0 4px; font-size: 16px; color: #a78bfa; }
+    p { font-size: 12px; color: #888; margin: 0 0 16px; }
+    label { font-size: 12px; color: #aaa; display: block; margin-bottom: 6px; }
+    input {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 8px 10px;
+      border-radius: 8px;
+      border: 1px solid #333;
+      background: #2a2a3e;
+      color: #e2e2f0;
+      font-size: 13px;
+      margin-bottom: 12px;
+    }
+    input:focus { outline: none; border-color: #7c3aed; }
+    button {
+      width: 100%;
+      padding: 9px;
+      background: #7c3aed;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    button:hover { background: #6d28d9; }
+    #status { font-size: 12px; color: #a78bfa; margin-top: 10px; text-align: center; min-height: 16px; }
+    a { color: #a78bfa; font-size: 11px; }
+  </style>
+</head>
+<body>
+  <h2>✨ Article Explainer</h2>
+  <p>Highlight text on any article to get an AI explanation.</p>
+
+  <label for="apiKey">Anthropic API Key</label>
+  <input type="password" id="apiKey" placeholder="sk-ant-..." />
+  <button id="save">Save Key</button>
+  <div id="status"></div>
+
+  <br>
+  <a href="https://console.anthropic.com/keys" target="_blank">Get your API key →</a>
+
+  <script>
+    const input = document.getElementById("apiKey");
+    const status = document.getElementById("status");
+
+    // Load existing key
+    chrome.storage.sync.get("apiKey", (result) => {
+      if (result.apiKey) {
+        input.value = result.apiKey;
+        status.textContent = "✓ Key saved";
+      }
+    });
+
+    document.getElementById("save").addEventListener("click", () => {
+      const key = input.value.trim();
+      if (!key.startsWith("sk-ant-")) {
+        status.textContent = "⚠️ Key should start with sk-ant-";
+        status.style.color = "#f87171";
+        return;
+      }
+      chrome.storage.sync.set({ apiKey: key }, () => {
+        status.textContent = "✓ Saved!";
+        status.style.color = "#a78bfa";
+      });
+    });
+  </script>
+</body>
+</html>
