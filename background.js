@@ -23,7 +23,7 @@ async function handleExplain(selectedText, context) {
   }
 
   const res = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
     {
       method: "POST",
       headers: {
@@ -46,8 +46,8 @@ Explain this passage clearly and concisely in 2-4 sentences. Use the article con
           }]
         }],
         generationConfig: {
-          maxOutputTokens: 400,
-          temperature: 0.5
+          maxOutputTokens: 800,
+          temperature: 0.7
         }
       })
     }
@@ -55,6 +55,7 @@ Explain this passage clearly and concisely in 2-4 sentences. Use the article con
 
   if (!res.ok) {
     const err = await res.json();
+    console.error("Gemini API Error:", err);
     throw new Error(err.error?.message || `API error ${res.status}`);
   }
 

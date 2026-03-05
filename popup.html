@@ -54,30 +54,6 @@
   <br>
   <a href="https://aistudio.google.com/app/apikey" target="_blank">Get your API key →</a>
 
-  <script>
-    const input = document.getElementById("apiKey");
-    const status = document.getElementById("status");
-
-    // Load existing key
-    chrome.storage.sync.get("apiKey", (result) => {
-      if (result.apiKey) {
-        input.value = result.apiKey;
-        status.textContent = "✓ Key saved";
-      }
-    });
-
-    document.getElementById("save").addEventListener("click", () => {
-      const key = input.value.trim();
-      if (!key.startsWith("AIza")) {
-        status.textContent = "⚠️ Key should start with AIza";
-        status.style.color = "#f87171";
-        return;
-      }
-      chrome.storage.sync.set({ apiKey: key }, () => {
-        status.textContent = "✓ Saved!";
-        status.style.color = "#a78bfa";
-      });
-    });
-  </script>
+  <script src="popup.js"></script>
 </body>
 </html>

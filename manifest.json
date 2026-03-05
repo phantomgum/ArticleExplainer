@@ -4,7 +4,10 @@
     "description": "Highlight any text on an article and get an AI explanation with full article context.",
     "version": "1.0",
     "permissions": ["activeTab", "storage", "scripting"],
-    "host_permissions": ["<all_urls>", "https://api.anthropic.com/*"],
+    "host_permissions": [
+      "<all_urls>",
+      "https://generativelanguage.googleapis.com/*"
+    ],
     "background": {
       "service_worker": "background.js"
     },

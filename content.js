@@ -76,18 +76,28 @@ async function runExplanation(selectedText, context) {
   btn.textContent = "Thinking…";
   result.textContent = "";
 
-  const response = await chrome.runtime.sendMessage({
-    type: "EXPLAIN",
-    selectedText,
-    context
-  });
+  try {
+    const response = await chrome.runtime.sendMessage({
+      type: "EXPLAIN",
+      selectedText,
+      context
+    });
 
-  btn.style.display = "none";
+    btn.style.display = "none";
 
-  if (response.error) {
-    result.innerHTML = `<span class="ae-error">⚠️ ${response.error}</span>`;
-  } else {
-    result.textContent = response.explanation;
+    if (!response) {
+      throw new Error("No response from background script.");
+    }
+
+    if (response.error) {
+      result.innerHTML = `<span class="ae-error">⚠️ ${response.error}</span>`;
+    } else {
+      result.textContent = response.explanation;
+    }
+  } catch (err) {
+    btn.disabled = false;
+    btn.textContent = "Try again";
+    result.innerHTML = `<span class="ae-error">⚠️ Error: ${err.message}. Try refreshing the page.</span>`;
   }
 }
 
