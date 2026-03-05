@@ -46,7 +46,7 @@
   <h2>✨ Article Explainer</h2>
   <p>Highlight text on any article to get an AI explanation.</p>
 
-  <label for="apiKey">Gemini API Key</label>
+  <label for="apiKey">Google Gemini API Key</label>
   <input type="password" id="apiKey" placeholder="AIza..." />
   <button id="save">Save Key</button>
   <div id="status"></div>
@@ -68,8 +68,8 @@
 
     document.getElementById("save").addEventListener("click", () => {
       const key = input.value.trim();
-      if (!key.startsWith("sk-ant-")) {
-        status.textContent = "⚠️ Key should start with sk-ant-";
+      if (!key.startsWith("AIza")) {
+        status.textContent = "⚠️ Key should start with AIza";
         status.style.color = "#f87171";
         return;
       }
